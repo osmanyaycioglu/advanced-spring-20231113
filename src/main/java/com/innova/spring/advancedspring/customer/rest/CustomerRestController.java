@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+// doğru bir yaklaşım değil
 @RestController
 @RequestMapping("/customer")
 public class CustomerRestController {

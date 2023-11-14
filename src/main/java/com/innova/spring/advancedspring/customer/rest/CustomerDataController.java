@@ -15,7 +15,6 @@ public class CustomerDataController {
     @PostMapping("/change/data")
     public String update(@RequestBody Customer customer){
         return "OK";
-
     }
 
 

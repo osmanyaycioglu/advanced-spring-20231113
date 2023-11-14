@@ -1,6 +1,8 @@
 package com.innova.spring.advancedspring.customer.rest;
 
 import com.innova.spring.advancedspring.customer.models.Customer;
+import com.innova.spring.advancedspring.customer.rest.models.CustomerDto;
+import com.innova.spring.advancedspring.customer.rest.models.CustomerQueryDto;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,12 +12,12 @@ import java.util.List;
 public class CustomerQueryController {
 
     @GetMapping("/getall")
-    public List<Customer> getAllCustomers(){
+    public List<CustomerQueryDto> getAllCustomers(){
         return null;
     }
 
     @GetMapping("/find")
-    public Customer find(@RequestParam("cid") Long customerId){
+    public CustomerQueryDto find(@RequestParam("cid") Long customerId){
         return null;
     }
 
