@@ -4,15 +4,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 public class Customer {
-    private String    firstName;
-    private String    lastName;
-    private String    username;
-    private String    password;
-    private LocalDate birthdate;
-    private Integer   weight;
-    private Integer   height;
+    private Long                customerId;
+    private String              customerUid;
+    private String              name;
+    private String              surname;
+    private CustomerCredentials customerCredentials;
+    private CustomerDetails     customerDetails;
+    private LocalDateTime       creationDate;
+    private LocalDateTime       updateDate;
+    private ECustomerStatus     customerStatus;
+
 }
