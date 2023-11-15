@@ -2,6 +2,7 @@ package com.innova.spring.advancedspring.rest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,16 +17,19 @@ import java.util.Map;
 public class HelloRestController {
 
     // @RequestMapping(method = RequestMethod.GET,path = "/greet1")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/greet1")
     public String gr1() {
         return "Hello world";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/greet1")
     public String gr2() {
         return "Hello world POST";
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @PutMapping("/greet1")
     public String gr3() {
         return "Hello world PUT";
