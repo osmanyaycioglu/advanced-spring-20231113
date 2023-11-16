@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -29,12 +30,20 @@ public class SecurityConfiguration {
     }
 
     @Bean
+    public JWTFilter jwtFilter() {
+        return new JWTFilter();
+    }
+
+    @Bean
     public SecurityFilterChain configureSec(HttpSecurity httpSecurityParam) throws Exception {
         return httpSecurityParam.authorizeRequests()
 //                                .antMatchers("/hello/**")
 //                                .anonymous()
-                                .antMatchers("/actuator/**")
-                                .hasAnyRole("ADMIN")
+//                                .antMatchers("/actuator/**")
+//                                .hasAnyRole("ADMIN")
+                                .antMatchers("/sec/v1/security/login",
+                                             "/actuator/**")
+                                .anonymous()
                                 .antMatchers("/api/**")
                                 .hasAnyRole("USER",
                                             "ADMIN",
@@ -48,10 +57,17 @@ public class SecurityConfiguration {
                                 .disable()
                                 .csrf()
                                 .disable()
+                                .addFilterBefore(jwtFilter(),
+                                                 UsernamePasswordAuthenticationFilter.class)
                                 .sessionManagement()
                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                                 .and()
                                 .build();
+    }
+
+    @Bean
+    public JWTService jwtService() {
+        return new JWTService();
     }
 
 }

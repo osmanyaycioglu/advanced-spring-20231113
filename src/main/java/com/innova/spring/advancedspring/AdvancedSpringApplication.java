@@ -3,6 +3,7 @@ package com.innova.spring.advancedspring;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
 import java.util.Arrays;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 @SpringBootApplication
 @ServletComponentScan
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableScheduling
 public class AdvancedSpringApplication {
 
     public static void main(String[] args) {

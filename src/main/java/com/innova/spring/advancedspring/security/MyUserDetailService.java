@@ -39,7 +39,7 @@ public class MyUserDetailService implements UserDetailsService {
         passwordEncoder = passwordEncoderParam;
         users.put("osmany",
                   User.builder()
-                      .username("osman")
+                      .username("osmany")
                       .password(passwordEncoderParam.encode("123456"))
                       .roles("ADMIN")
                       .build());
