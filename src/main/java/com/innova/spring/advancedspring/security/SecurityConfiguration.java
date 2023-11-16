@@ -42,7 +42,9 @@ public class SecurityConfiguration {
 //                                .antMatchers("/actuator/**")
 //                                .hasAnyRole("ADMIN")
                                 .antMatchers("/sec/v1/security/login",
-                                             "/actuator/**")
+                                             "/sec/v1/user/**",
+                                             "/actuator/**",
+                                             "/h2-console/**")
                                 .anonymous()
                                 .antMatchers("/api/**")
                                 .hasAnyRole("USER",
@@ -61,6 +63,10 @@ public class SecurityConfiguration {
                                                  UsernamePasswordAuthenticationFilter.class)
                                 .sessionManagement()
                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                                .and()
+                                .headers()
+                                .frameOptions()
+                                .disable()
                                 .and()
                                 .build();
     }

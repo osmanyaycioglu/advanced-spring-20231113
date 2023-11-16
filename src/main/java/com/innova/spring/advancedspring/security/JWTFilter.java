@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
-import java.util.Collection;
+import java.util.*;
 
 public class JWTFilter extends OncePerRequestFilter {
     @Autowired
@@ -26,14 +26,15 @@ public class JWTFilter extends OncePerRequestFilter {
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
-    private MyUserDetailService   detailService;
+    private MyUserDetailService detailService;
+    private List<String>        pathsToCont = Arrays.asList("/sec", "/actuator", "/h2-console");
 
     @Override
     protected void doFilterInternal(final HttpServletRequest request,
                                     final HttpServletResponse response,
                                     final FilterChain filterChain) throws ServletException, IOException {
         String servletPathLoc = request.getServletPath();
-        if (servletPathLoc != null && (servletPathLoc.startsWith("/sec") || servletPathLoc.startsWith("/actuator"))) {
+        if (servletPathLoc != null && (pathsToCont.stream().anyMatch(s -> servletPathLoc.startsWith(s)))) {
             filterChain.doFilter(request,
                                  response);
             return;
