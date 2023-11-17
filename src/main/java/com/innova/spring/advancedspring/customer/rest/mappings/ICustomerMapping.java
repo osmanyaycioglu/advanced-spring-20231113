@@ -1,11 +1,16 @@
 package com.innova.spring.advancedspring.customer.rest.mappings;
 
 import com.innova.spring.advancedspring.customer.models.Customer;
+import com.innova.spring.advancedspring.customer.models.Phone;
 import com.innova.spring.advancedspring.customer.rest.models.CustomerDto;
 import com.innova.spring.advancedspring.customer.rest.models.CustomerQueryDto;
+import com.innova.spring.advancedspring.customer.rest.models.PhoneDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+
+import java.util.List;
+import java.util.Set;
 
 @Mapper
 public interface ICustomerMapping {
@@ -36,5 +41,15 @@ public interface ICustomerMapping {
     @Mapping(target = "weight",source = "customerDetails.weight")
     @Mapping(target = "birthdate",source = "customerDetails.birthdate")
     CustomerQueryDto toCustomerQueryDto(Customer customer);
+
+    List<CustomerQueryDto> toCustomerQueryDtos(List<Customer> customer);
+
+    Phone toPhone(PhoneDto phone);
+
+    PhoneDto toPhoneDto(Phone phone);
+
+    Set<Phone> toPhones(Set<PhoneDto> phone);
+
+    Set<PhoneDto> toPhoneDtos(Set<Phone> phone);
 
 }

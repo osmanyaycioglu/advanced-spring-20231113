@@ -1,6 +1,7 @@
 package com.innova.spring.advancedspring.security;
 
-import lombok.RequiredArgsConstructor;
+import com.innova.spring.advancedspring.user.UserEntity;
+import com.innova.spring.advancedspring.user.dao.IUserEntityDao;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class MyUserDetailService implements UserDetailsService {
     private final BCryptPasswordEncoder passwordEncoder;
-
+    private final IUserEntityDao userEntityDao;
 //    private static Map<String, UserDetails> users = new ConcurrentHashMap<>();
 //
 //    static {
@@ -35,20 +36,23 @@ public class MyUserDetailService implements UserDetailsService {
 
     private Map<String, UserDetails> users = new ConcurrentHashMap<>();
 
-    public MyUserDetailService(BCryptPasswordEncoder passwordEncoderParam) {
+    public MyUserDetailService(BCryptPasswordEncoder passwordEncoderParam,
+                               final IUserEntityDao userEntityDaoParam) {
         passwordEncoder = passwordEncoderParam;
-        users.put("osmany",
-                  User.builder()
-                      .username("osmany")
-                      .password(passwordEncoderParam.encode("123456"))
-                      .roles("ADMIN")
-                      .build());
-        users.put("ahmett",
-                  User.builder()
-                      .username("ahmett")
-                      .password(passwordEncoderParam.encode("123456"))
-                      .roles("USER")
-                      .build());
+        userEntityDao   = userEntityDaoParam;
+//
+//        users.put("osmany",
+//                  User.builder()
+//                      .username("osmany")
+//                      .password(passwordEncoderParam.encode("123456"))
+//                      .roles("ADMIN")
+//                      .build());
+//        users.put("ahmett",
+//                  User.builder()
+//                      .username("ahmett")
+//                      .password(passwordEncoderParam.encode("123456"))
+//                      .roles("USER")
+//                      .build());
     }
 
     private UserDetails cloneUser(UserDetails userDetailsParam) {
@@ -59,13 +63,21 @@ public class MyUserDetailService implements UserDetailsService {
                    .build();
     }
 
+    private UserDetails convertToUserDetails(UserEntity userDetailsParam) {
+        return User.builder()
+                   .username(userDetailsParam.getUsername())
+                   .password(passwordEncoder.encode(userDetailsParam.getPassword()))
+                   .roles(userDetailsParam.getUserRole().name())
+                   .build();
+    }
+
     @Override
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-        UserDetails userDetailsLoc = users.get(username);
+        UserEntity  userDetailsLoc  = userEntityDao.findByUsername(username);
         if (userDetailsLoc == null) {
             throw new UsernameNotFoundException("Böyle bir user yok");
         }
 
-        return cloneUser(userDetailsLoc);
+        return convertToUserDetails(userDetailsLoc);
     }
 }

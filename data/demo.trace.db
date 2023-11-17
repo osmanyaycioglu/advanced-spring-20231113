@@ -1,0 +1,4 @@
+2023-11-17 13:48:06 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM MUSTERI \000d\000a[*]SELECT * FROM  CUSTOMER_CREDENTIALS"; SQL statement:
+SELECT * FROM MUSTERI 
+SELECT * FROM  CUSTOMER_CREDENTIALS [42000-214]
