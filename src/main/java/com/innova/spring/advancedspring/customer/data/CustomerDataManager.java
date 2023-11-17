@@ -4,8 +4,12 @@ import com.innova.spring.advancedspring.customer.data.dao.ICustomerDao;
 import com.innova.spring.advancedspring.customer.models.Customer;
 import com.innova.spring.advancedspring.customer.models.ECustomerStatus;
 import com.innova.spring.advancedspring.customer.models.Phone;
+import com.innova.spring.advancedspring.log.LogManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
@@ -15,10 +19,15 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CustomerDataManager {
     private final ICustomerDao customerDao;
+    private final LogManager   logManager;
 
+    @Transactional(propagation = Propagation.REQUIRED, noRollbackFor = {IllegalStateException.class},
+            isolation = Isolation.READ_UNCOMMITTED)
+    // start transaction
     public void insert(Customer customerParam) {
+        logManager.insertLog("inserting : " + customerParam);
         Set<Phone> phonesLoc = customerParam.getPhones();
-        if (phonesLoc != null){
+        if (phonesLoc != null) {
             for (Phone phoneLoc : phonesLoc) {
                 phoneLoc.setCustomer(customerParam);
             }
@@ -26,7 +35,7 @@ public class CustomerDataManager {
         customerParam.setCustomerUid(UUID.randomUUID()
                                          .toString());
         customerDao.save(customerParam);
-    }
+    } // commit
 
     public void updateStatus(final ECustomerStatus eCustomerStatusParam,
                              final String cuidParam) {

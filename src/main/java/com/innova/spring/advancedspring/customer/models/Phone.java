@@ -103,8 +103,6 @@ public class Phone {
     public String toString() {
         return "Phone(phoneId="
                + this.getPhoneId()
-               + ", customer="
-               + this.getCustomer()
                + ", phoneName="
                + this.getPhoneName()
                + ", phoneNumber="

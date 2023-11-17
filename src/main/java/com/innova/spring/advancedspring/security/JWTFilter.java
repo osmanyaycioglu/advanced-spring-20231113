@@ -27,7 +27,7 @@ public class JWTFilter extends OncePerRequestFilter {
     private AuthenticationManager authenticationManager;
     @Autowired
     private MyUserDetailService detailService;
-    private List<String>        pathsToCont = Arrays.asList("/sec", "/actuator", "/h2-console");
+    private List<String>        pathsToCont = Arrays.asList("/sec", "/actuator", "/h2-console","/counter");
 
     @Override
     protected void doFilterInternal(final HttpServletRequest request,

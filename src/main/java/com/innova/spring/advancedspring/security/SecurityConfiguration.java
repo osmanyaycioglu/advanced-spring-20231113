@@ -44,6 +44,7 @@ public class SecurityConfiguration {
                                 .antMatchers("/sec/v1/security/login",
                                              "/sec/v1/user/**",
                                              "/actuator/**",
+                                             "/counter/**",
                                              "/h2-console/**")
                                 .anonymous()
                                 .antMatchers("/api/**")

@@ -35,6 +35,9 @@ public class Customer {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "customer")
     private Set<Phone>          phones;
 
+//    @Version
+//    private Long versionId;
+
     @PrePersist
     public void persist() {
         creationDate = LocalDateTime.now();
