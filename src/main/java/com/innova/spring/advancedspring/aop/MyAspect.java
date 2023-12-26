@@ -52,6 +52,19 @@ public class MyAspect {
                            + joinPointParam.toLongString());
     }
 
+    @AfterThrowing(value = "execution(* com.innova.spring.advancedspring.aop.MyCounterService.*(String)) && args(xyz)",
+            throwing = "retLong")
+    public void armethod(JoinPoint joinPointParam,
+                         String xyz,
+                         IllegalStateException retLong) {
+        System.out.println("@AfterReturning Çalıştım. Parametre : "
+                           + xyz
+                           + " return : "
+                           + retLong
+                           + " - "
+                           + joinPointParam.toLongString());
+    }
+
     @Around("execution(* com.innova.spring.advancedspring.aop.MyCounterService.*(String))")
     public Object aroundMethod(ProceedingJoinPoint joinPointParam) {
         try {
